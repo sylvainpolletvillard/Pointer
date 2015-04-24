@@ -297,12 +297,14 @@
     if (typeof exports !== 'undefined') {
         exports.module = PointerTracker;
     }
-	
-	var nativeAddEventListener = Element.prototype.addEventListener;
-	Element.prototype.addEventListener = function(evt){
-		if(evt.indexOf("pointer") === 0){ this.pointerTracker = new PointerTracker(this); }
-		return nativeAddEventListener.apply(this, arguments);
-	};
-	
+
+    var nativeAddEventListener = Element.prototype.addEventListener;
+    Element.prototype.addEventListener = function(evt){
+        if(evt.indexOf("pointer") === 0 && !this.pointerTracker){
+            this.pointerTracker = new PointerTracker(this); 
+        }
+        return nativeAddEventListener.apply(this, arguments);
+    };
+
     return PointerTracker;
 }));
