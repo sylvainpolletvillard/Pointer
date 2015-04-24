@@ -1,10 +1,19 @@
     var $div = document.querySelector('#pointer');
     var $console = document.querySelector('#console');
-    var pointer = new PointerTracker($div);
+    var EVENTS = {
+		up: 'pointerup',
+		down: 'pointerdown',
+		move: 'pointermove',
+		over: 'pointerover',
+		cancel: 'pointercancel',
+		out: 'pointerout',
+		leave: 'pointerleave',
+		enter:'pointerenter'
+	};
 
-    for(var eventName in pointer.EVENTS){
-        console.log(pointer.EVENTS[eventName]);
-        $div.addEventListener(pointer.EVENTS[eventName], function (event) {
+    for(var eventName in EVENTS){
+        console.log(EVENTS[eventName]);
+        $div.addEventListener(EVENTS[eventName], function (event) {
             var $eventElement = document.createElement('div');
             $eventElement.innerHTML = getTime()+': ' + event.type;
             $console.insertBefore($eventElement, $console.firstChild);
@@ -17,6 +26,6 @@
             + ((currentdate.getSeconds()<10) ? "0"+currentdate.getSeconds() : currentdate.getSeconds());
     }
 
-    function onChange() {
-        pointer.setMoveHoverState(document.getElementById('checkbox').checked);
+    function onChange() {		
+        $div.pointerTracker.setMoveHoverState(document.getElementById('checkbox').checked);
     }
